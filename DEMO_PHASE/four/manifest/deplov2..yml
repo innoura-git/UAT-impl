@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-fourv2
+  labels:
+    app: app-fourv2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-fourv2
+  template:
+    metadata:
+      labels:
+        app: app-fourv2
+    spec:
+      containers:
+        - name: app-fourv2
+          image: innoura/demo-app-fourv2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4004

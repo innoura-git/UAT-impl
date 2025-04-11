@@ -1,0 +1,12 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: app-two-route
+spec:
+  to:
+    kind: Service
+    name: app-two-service
+  port:
+    targetPort: envoy-inbound
+  tls:
+    termination: edge

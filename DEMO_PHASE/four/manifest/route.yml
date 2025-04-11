@@ -1,0 +1,12 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: app-four-route
+spec:
+  to:
+    kind: Service
+    name: app-four-service
+  port:
+    targetPort: envoy-inbound
+  tls:
+    termination: edge

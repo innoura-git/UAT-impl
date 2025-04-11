@@ -1,0 +1,12 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: app-four-route          # Route name
+spec:
+  path: /         # All requests starting with "/four" are sent here
+  to:
+    kind: Service
+    name: app-four-service      # Target service is the one that fronts Envoy
+  port:
+    targetPort: 80            # Direct traffic to Envoy’s inbound port (not the app port)
+  wildcardPolicy: None

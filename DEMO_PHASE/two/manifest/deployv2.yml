@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-twov2
+  labels:
+    app: app-twov2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-twov2
+  template:
+    metadata:
+      labels:
+        app: app-twov2
+    spec:
+      containers:
+        - name: app-twov2
+          image: innoura/demo-app-twov2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4002

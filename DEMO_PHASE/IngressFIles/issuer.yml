@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-main-gateway
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: tharun@innoura.com
+    privateKeySecretRef:
+      name: letsencrypt-main-gateway
+    solvers:
+      - http01:
+          ingress:
+            class: nginx

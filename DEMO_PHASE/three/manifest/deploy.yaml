@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-three
+  labels:
+    app: app-three
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-three
+  template:
+    metadata:
+      labels:
+        app: app-three
+    spec:
+      containers:
+        - name: app-three
+          image: innoura/demo-app-three
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4003
+        - name: envoy
+          image: envoyproxy/envoy:v1.26.0
+          args:
+            - "-c"
+            - "/etc/envoy/envoy.yaml"
+            - "--log-level"
+            - "debug"
+          ports:
+            - containerPort: 8888
+            - containerPort: 15001
+            - containerPort: 9901
+          securityContext:
+            runAsUser: 101
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: envoy-config-volume
+              mountPath: /etc/envoy
+              readOnly: true
+            - name: envoy-logs
+              mountPath: /logs
+      volumes:
+        - name: envoy-config-volume
+          configMap:
+            name: app-three-envoy-config
+        - name: envoy-logs
+          emptyDir: {}

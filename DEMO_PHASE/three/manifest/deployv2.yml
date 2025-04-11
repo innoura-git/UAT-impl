@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-threev2
+  labels:
+    app: app-threev2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-threev2
+  template:
+    metadata:
+      labels:
+        app: app-threev2
+    spec:
+      containers:
+        - name: app-threev2
+          image: innoura/demo-app-threev2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4003

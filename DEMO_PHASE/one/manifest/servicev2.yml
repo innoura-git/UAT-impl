@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-one-service-v2
+spec:
+  selector:
+    app: app-onev2
+  ports:
+    - name: envoy-inbound
+      port: 4001
+      targetPort: 4001

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-four
+  labels:
+    app: app-four
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-four
+  template:
+    metadata:
+      labels:
+        app: app-four
+    spec:
+      containers:
+        - name: app-four
+          image: innoura/demo-app-four
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4004
+        - name: envoy
+          image: envoyproxy/envoy:v1.26.0
+          args:
+            - "-c"
+            - "/etc/envoy/envoy.yaml"
+            - "--log-level"
+            - "debug"
+          ports:
+            - containerPort: 8888
+            - containerPort: 15001
+            - containerPort: 9901
+          securityContext:
+            runAsUser: 101
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true  # Keep read-only for security
+          volumeMounts:
+            - name: envoy-config-volume
+              mountPath: /etc/envoy
+              readOnly: true
+            - name: envoy-logs  # Add writable volume for logs
+              mountPath: /logs
+      volumes:
+        - name: envoy-config-volume
+          configMap:
+            name: app-four-envoy-config
+        - name: envoy-logs
+          emptyDir: {}

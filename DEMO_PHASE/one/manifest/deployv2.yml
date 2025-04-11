@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-onev2
+  labels:
+    app: app-onev2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-onev2
+  template:
+    metadata:
+      labels:
+        app: app-onev2
+    spec:
+      containers:
+        - name: app-onev2
+          image: innoura/demo-app-onev2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4001

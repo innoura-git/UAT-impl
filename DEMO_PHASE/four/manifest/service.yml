@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-four-service
+spec:
+  selector:
+    app: app-four
+  ports:
+    - name: envoy-inbound
+      port: 80
+      targetPort: 8888
